@@ -79,7 +79,7 @@ const TILE_COLORS = {
   1: [27, 125, 76  ], // wall  — purple-grey
   2: [163, 212, 108], // start — same as floor
   3: [163, 212, 108], // coin  — same as floor (coin drawn on top)
-  4: [66, 195, 255 ], // exit  — green tint when locked
+  4: [247, 205, 64 ], // exit  — green tint when locked
 };
 
 // ------------------------------------------------------------
@@ -216,9 +216,9 @@ function drawMaze() {
       // Exit tile changes colour when all coins are collected
       if (tile === 4) {
         if (heartsCollected === hearts.length) {
-          fill(130, 215, 255); // bright green — exit is open
+          fill(247, 205, 64); // bright green — exit is open
         } else {
-          fill(66, 195, 255);  // dim green — exit is locked
+          fill(219, 153, 29);  // dim green — exit is locked
         }
       } else {
         let c = TILE_COLORS[tile];
@@ -463,12 +463,14 @@ function drawHUD() {
   textSize(14);
   textAlign(CENTER);
   textFont("monospace");
-  text("HEARTS: " + heartsCollected + " / " + hearts.length, width / 2, 20);
+  text("HEARTS: " + heartsCollected + " / " + hearts.length, 105, 20);
+  text("SUPER MARIO MAZE: FIND LOVE", width / 2, 20);
 
   // Show exit hint once all hearts are collected
   if (heartsCollected === hearts.length) {
     fill(189, 255, 122);
-    text("Exit is open! Find the blue tile.", width / 2, 40);
+    textAlign(LEFT);
+    text("Exit is open! Find the blue tile.", 50, 40);
   }
 }
 
