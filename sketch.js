@@ -80,7 +80,7 @@ const TILE_COLORS = {
 let player = {
   x: 0,
   y: 0,
-  speed: 6,
+  speed: 10,
 
   // Animation state
   currentFrame: 0,
@@ -476,7 +476,7 @@ function drawHUD() {
 
   fill(218, 153, 29);
   rectMode(CENTER);
-  rect(width / 2, 20, tw + padding, th);
+  rect(width / 2, 20, tw + padding, th, 5);
   fill(255);
   text("SUPER MARIO MAZE: FIND LOVE", width / 2, 20);
 
@@ -500,9 +500,9 @@ function drawWinScreen() {
   filter(BLUR, 5);
 
 
-  fill(247, 205, 64)
   rectMode(CENTER);
-  rect(200, 150, width / 2, height / 2, 5);
+  fill(247, 205, 64)
+  rect(width / 2, height / 2, 600, 200, 10);
 
 
   fill(255);
