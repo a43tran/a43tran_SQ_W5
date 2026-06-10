@@ -226,6 +226,20 @@ function drawMaze() {
       }
 
       rect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE, TILE_SIZE);
+      
+      if (tile === 4) {
+        if (heartsCollected === hearts.length) {
+          fill(255);
+     } else {
+        fill(140, 96, 14);
+      }
+
+      textAlign(CENTER, CENTER);
+      textSize(32);
+      textStyle(BOLD);
+      text("?", col * TILE_SIZE + TILE_SIZE / 2, row * TILE_SIZE + TILE_SIZE / 2);
+    }
+
     }
   }
 }
@@ -495,5 +509,5 @@ function drawWinScreen() {
   textSize(16);
   fill(255);
   textStyle(BOLD);
-  text("All hearts collected", width / 2, height / 2 + 20);
+  text("Mario has found love with all hearts collected", width / 2, height / 2 + 20);
 }
