@@ -1,18 +1,7 @@
 // ============================================================
 // Week 5 Example 3 — Maze with Animated Character and Coins
 // ============================================================
-// This sketch combines everything from Examples 1 and 2:
-//   - Animated walking character (4 directions)
-//   - Animated spinning coins
-//   - A hardcoded maze drawn with shapes
-//   - Wall collision to keep the player inside the maze
-//   - Collect all coins to unlock the exit
-// ============================================================
 
-// ------------------------------------------------------------
-// SPRITE CONFIGURATION — Walking Character
-// Same structure as Example 1. See that file for full notes.
-// ------------------------------------------------------------
 const SPRITE = {
   frameWidth:  75,
   frameHeight: 150,
@@ -480,9 +469,17 @@ function drawHUD() {
   textFont("monospace");
   text("HEARTS: " + heartsCollected + " / " + hearts.length, 105, 20);
   textStyle(BOLD);
+
+  let tw = textWidth("SUPER MARIO MAZE: FIND LOVE");
+  let th = 20;
+  let padding = 50;
+
+  fill(218, 153, 29);
+  rectMode(CENTER);
+  rect(width / 2, 20, tw + padding, th);
+  fill(255);
   text("SUPER MARIO MAZE: FIND LOVE", width / 2, 20);
 
-  // Show exit hint once all hearts are collected
   if (heartsCollected === hearts.length) {
     fill(189, 255, 122);
     textAlign(LEFT);
@@ -501,6 +498,11 @@ function drawWinScreen() {
   imageMode(CENTER);
   image(bgImage, width / 2, height / 2, width, height);
   filter(BLUR, 5);
+
+
+  fill(247, 205, 64)
+  rectMode(CENTER);
+  rect(200, 150, width / 2, height / 2, 5);
 
 
   fill(255);
