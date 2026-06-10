@@ -29,7 +29,7 @@ const SPRITE = {
     down:  { x: 0, y: 0  },
     up:    { x: 0, y: 0  },
     right: { x: .1, y: 10 },
-    left:  { x: 1.2, y: 20 },
+    left:  { x: 2.2, y: 20 },
   },
 };
 
@@ -75,11 +75,11 @@ const MAZE = [
 
 // Colours for each tile type — stored as RGB arrays
 const TILE_COLORS = {
-  0: [40,  40,  50 ], // floor — dark grey
-  1: [80,  60,  100], // wall  — purple-grey
-  2: [40,  40,  50 ], // start — same as floor
-  3: [40,  40,  50 ], // coin  — same as floor (coin drawn on top)
-  4: [60,  100, 80 ], // exit  — green tint when locked
+  0: [163, 212, 108], // floor — dark grey
+  1: [27, 125, 76  ], // wall  — purple-grey
+  2: [163, 212, 108], // start — same as floor
+  3: [163, 212, 108], // coin  — same as floor (coin drawn on top)
+  4: [66, 195, 255 ], // exit  — green tint when locked
 };
 
 // ------------------------------------------------------------
@@ -121,6 +121,7 @@ let gameWon = false;
 // Images
 let characterSheet;
 let heartSheet;
+let bgImage;
 
 // ============================================================
 // preload()
@@ -129,7 +130,8 @@ let heartSheet;
 // ============================================================
 function preload() {
   characterSheet = loadImage("assets/images/walking.png");
-  heartSheet      = loadImage("assets/images/hearts.png");
+  heartSheet     = loadImage("assets/images/hearts.png");
+  bgImage        = loadImage("assets/images/bg.jpg");
 }
 
 // ============================================================
@@ -177,7 +179,7 @@ function setup() {
 // appears on top of it.
 // ============================================================
 function draw() {
-  background(20);
+  background(bgImage);
 
   drawMaze();
   updateCoins();
@@ -214,9 +216,9 @@ function drawMaze() {
       // Exit tile changes colour when all coins are collected
       if (tile === 4) {
         if (coinsCollected === coins.length) {
-          fill(30, 200, 120); // bright green — exit is open
+          fill(130, 215, 255); // bright green — exit is open
         } else {
-          fill(60, 100, 80);  // dim green — exit is locked
+          fill(66, 195, 255);  // dim green — exit is locked
         }
       } else {
         let c = TILE_COLORS[tile];
@@ -263,7 +265,7 @@ function drawCoins() {
     let dw = COIN.frameWidth  * COIN.scale;
     let dh = COIN.frameHeight * COIN.scale;
 
-    image(coinSheet, coin.x, coin.y, dw, dh, sx, 0, COIN.frameWidth, COIN.frameHeight);
+    image(heartSheet, coin.x, coin.y, dw, dh, sx, 0, COIN.frameWidth, COIN.frameHeight);
   }
 }
 
@@ -477,7 +479,7 @@ function drawHUD() {
 // in front of the maze, character, and HUD.
 // ------------------------------------------------------------
 function drawWinScreen() {
-  fill(0, 0, 0, 160);
+  background(bgImage);
   rectMode(CORNER);
   rect(0, 0, width, height);
 
