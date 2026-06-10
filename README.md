@@ -1,29 +1,29 @@
-# Week 5 Example 1 — Sprite Sheet Animation
+# Week 5 Example 3 — Maze with Animated Character and Coins
 
 ## What This Example Demonstrates
 
 > **Note for students:** This section is included in example files only to help you study. Do not include it in your Side Quest submissions.
 
-This example introduces sprite sheet animation by loading a single image file and drawing one frame at a time to create a walking character that faces the correct direction.
+This example combines sprite sheet animation, coin objects, and a tile-based maze into a complete mini-game with wall collision, coin collection, and a locked exit.
 
-- **Sprite sheet** — a single image containing all animation frames arranged in a grid; one row per direction, one column per frame
-- **`preload()`** — loads the sprite sheet image before `setup()` runs so it is ready to use immediately
-- **`imageMode(CENTER)`** — makes `image()` draw from the centre point rather than the top-left corner; useful for positioning characters
-- **`image()` with source rectangle** — the 9-argument version of `image()` lets you specify which part of a larger image to draw; used here to extract one frame from the sheet
-- **Frame selection** — multiplying `currentFrame` by `frameWidth` slides the source window along the row to select the correct frame
-- **Row selection** — multiplying the row index by `frameHeight` moves the source window to the correct direction row
-- **`frameTimer`** — counts up every `draw()` call; when it reaches `animSpeed`, the frame advances; this controls how fast the animation plays independently of the frame rate
-- **`isMoving` flag** — animation only plays when the player is moving; resets to frame 0 when idle so the character stands still
-- **`SPRITE` config object** — groups all sprite settings in one place so they are easy to adjust without hunting through the code
-- **`offsets`** — fine-tune the source position per direction to correct misaligned frames on a sprite sheet
+- **2D array as a map** — the maze is stored as a grid of numbers; each number represents a tile type (floor, wall, coin, exit); the array drives both the visual layout and the game logic
+- **Canvas sized to the maze** — `createCanvas(TILE_SIZE * MAZE[0].length, TILE_SIZE * MAZE.length)` sizes the canvas to fit the maze exactly rather than using fixed numbers
+- **Building objects from map data** — `setup()` scans the maze array to find coin tiles and start position; coins are created as objects at runtime rather than hardcoded
+- **`rectMode(CORNER)`** — switches `rect()` back to top-left positioning for drawing tiles; used here because tile coordinates come from the array index, not a centre point
+- **Corner-based wall collision** — checks all four corners of the player's collision box against the maze tile at each corner; pushes the player out from the direction with the smallest overlap
+- **Collision box smaller than sprite** — `hw` and `hh` are set smaller than the visible sprite so the player can navigate tight corridors without getting caught on corners
+- **`dist()`** — returns the distance between two points; used for both coin collection and exit detection with a threshold based on `TILE_SIZE`
+- **Locked exit** — the exit tile changes colour and only activates when `coinsCollected === coins.length`; a single boolean condition controls both the visual and the logic
+- **`animateSprite()` and `drawCharacter()`** — same as Example 1; see that file for full notes on sprite sheet animation
+- **`updateCoins()` and `drawCoins()` separation** — same pattern as Example 2; update logic and drawing are kept in separate functions
 
 ## Setup and Interaction Instructions
 
 To run the sketch locally, open `index.html` in Google Chrome using Live Server.
 
-**Controls:** WASD to move in all four directions.
+**Controls:** WASD to move.
 
-The HUD shows the current direction, frame number, and row — useful for tuning your own sprite sheet.
+Collect all 3 coins then reach the green exit tile to win.
 
 **Opening the Chrome Console**
 
@@ -37,7 +37,10 @@ The console will show any errors in your sketch.
 | File | Source |
 |------|--------|
 | `assets/images/walking.png` | Slynyrd, Pixelblog 22: Top Down Character Sprites |
+| `assets/images/coin_gold.png` | Bellanger, C., Animated Coins — OpenGameArt.org |
 
 ## References
+
+Bellanger, C. n.d. *Animated Coins*. OpenGameArt.org. Retrieved May 1, 2026, from https://opengameart.org/content/animated-coins-0
 
 Slynyrd. 2019. *Pixelblog 22: Top Down Character Sprites*. Slynyrd Blog. Retrieved May 1, 2026, from https://www.slynyrd.com/blog/2019/10/21/pixelblog-22-top-down-character-sprites
