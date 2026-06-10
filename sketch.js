@@ -37,7 +37,7 @@ const SPRITE = {
 // COIN CONFIGURATION
 // Same structure as Example 2. See that file for full notes.
 // ------------------------------------------------------------
-const COIN = {
+const HEART = {
   frameWidth:  32,
   frameHeight: 32,
   numFrames:   8,
@@ -91,7 +91,7 @@ const TILE_COLORS = {
 let player = {
   x: 0,
   y: 0,
-  speed: 2,
+  speed: 6,
 
   // Animation state
   currentFrame: 0,
@@ -110,8 +110,8 @@ let player = {
 // Built from the maze data in setup() — any tile marked 3
 // becomes a coin object with its own position and frame counter.
 // ------------------------------------------------------------
-let coins = [];
-let coinsCollected = 0;
+let hearts = [];
+let heartsCollected = 0;
 
 // ------------------------------------------------------------
 // GAME STATE
@@ -160,10 +160,10 @@ function setup() {
       if (tile === 3) {
         // Create a coin object for each coin tile
         // Random start frame so coins don't all spin in sync
-        coins.push({
+        hearts.push({
           x:          col * TILE_SIZE + TILE_SIZE / 2,
           y:          row * TILE_SIZE + TILE_SIZE / 2,
-          frame:      floor(random(COIN.numFrames)),
+          frame:      floor(random(HEART.numFrames)),
           frameTimer: 0,
           collected:  false,
         });
@@ -182,11 +182,11 @@ function draw() {
   background(bgImage);
 
   drawMaze();
-  updateCoins();
-  drawCoins();
+  updateHearts();
+  drawHearts();
   handleInput();
   resolveWallCollisions();
-  checkCoinCollection();
+  checkHeartCollection();
   checkExit();
   animateSprite();
   drawCharacter();
@@ -215,7 +215,7 @@ function drawMaze() {
 
       // Exit tile changes colour when all coins are collected
       if (tile === 4) {
-        if (coinsCollected === coins.length) {
+        if (heartsCollected === hearts.length) {
           fill(130, 215, 255); // bright green — exit is open
         } else {
           fill(66, 195, 255);  // dim green — exit is locked
@@ -236,14 +236,14 @@ function drawMaze() {
 // Skips coins that have already been collected.
 // Each coin has its own frameTimer so they animate independently.
 // ------------------------------------------------------------
-function updateCoins() {
-  for (let i = 0; i < coins.length; i++) {
-    if (coins[i].collected) continue; // skip collected coins
+function updateHearts() {
+  for (let i = 0; i < hearts.length; i++) {
+    if (hearts[i].collected) continue; // skip collected hearts
 
-    coins[i].frameTimer++;
-    if (coins[i].frameTimer >= COIN.animSpeed) {
-      coins[i].frameTimer = 0;
-      coins[i].frame = (coins[i].frame + 1) % COIN.numFrames;
+    hearts[i].frameTimer++;
+    if (hearts[i].frameTimer >= HEART.animSpeed) {
+      hearts[i].frameTimer = 0;
+      hearts[i].frame = (hearts[i].frame + 1) % HEART.numFrames;
     }
   }
 }
@@ -253,19 +253,19 @@ function updateCoins() {
 // Loops through every coin and draws it at its current frame.
 // Skips coins that have already been collected.
 // ------------------------------------------------------------
-function drawCoins() {
-  for (let i = 0; i < coins.length; i++) {
-    if (coins[i].collected) continue; // skip collected coins
+function drawHearts() {
+  for (let i = 0; i < hearts.length; i++) {
+    if (hearts[i].collected) continue; // skip collected hearts
 
-    let coin = coins[i];
+    let heart = hearts[i];
 
     // Source x position on the sprite sheet
     // Coins have only one row so sy is always 0
-    let sx = coin.frame * COIN.frameWidth;
-    let dw = COIN.frameWidth  * COIN.scale;
-    let dh = COIN.frameHeight * COIN.scale;
+    let sx = heart.frame * HEART.frameWidth;
+    let dw = HEART.frameWidth  * HEART.scale;
+    let dh = HEART.frameHeight * HEART.scale;
 
-    image(heartSheet, coin.x, coin.y, dw, dh, sx, 0, COIN.frameWidth, COIN.frameHeight);
+    image(heartSheet, heart.x, heart.y, dw, dh, sx, 0, HEART.frameWidth, HEART.frameHeight);
   }
 }
 
@@ -361,15 +361,15 @@ function resolveWallCollisions() {
 // collect each coin. A threshold of 60% of TILE_SIZE feels
 // natural — not too generous, not too strict.
 // ------------------------------------------------------------
-function checkCoinCollection() {
-  for (let i = 0; i < coins.length; i++) {
-    if (coins[i].collected) continue;
+function checkHeartCollection() {
+  for (let i = 0; i < hearts.length; i++) {
+    if (hearts[i].collected) continue;
 
     // dist() returns the distance between two points
-    let d = dist(player.x, player.y, coins[i].x, coins[i].y);
+    let d = dist(player.x, player.y, hearts[i].x, hearts[i].y);
     if (d < TILE_SIZE * 0.6) {
-      coins[i].collected = true;
-      coinsCollected++;
+      hearts[i].collected = true;
+      heartsCollected++;
     }
   }
 }
@@ -381,7 +381,7 @@ function checkCoinCollection() {
 // the player is close enough to trigger a win.
 // ------------------------------------------------------------
 function checkExit() {
-  if (coinsCollected < coins.length) return; // exit is still locked
+  if (heartsCollected < hearts.length) return; // exit is still locked
 
   for (let row = 0; row < MAZE.length; row++) {
     for (let col = 0; col < MAZE[row].length; col++) {
@@ -461,14 +461,14 @@ function drawHUD() {
   noStroke();
   fill(255);
   textSize(14);
-  textAlign(LEFT);
+  textAlign(CENTER);
   textFont("monospace");
-  text("Coins: " + coinsCollected + " / " + coins.length, 10, 20);
+  text("HEARTS: " + heartsCollected + " / " + hearts.length, width / 2, 20);
 
-  // Show exit hint once all coins are collected
-  if (coinsCollected === coins.length) {
-    fill(30, 200, 120);
-    text("Exit is open! Find the green tile.", 10, 40);
+  // Show exit hint once all hearts are collected
+  if (heartsCollected === hearts.length) {
+    fill(189, 255, 122);
+    text("Exit is open! Find the blue tile.", width / 2, 40);
   }
 }
 
@@ -480,16 +480,18 @@ function drawHUD() {
 // ------------------------------------------------------------
 function drawWinScreen() {
   imageMode(CENTER);
-  filter(BLUR, 3);
-  image(bgImage, width/2, height/2, width, height);
+  image(bgImage, width / 2, height / 2, width, height);
+  filter(BLUR, 5);
 
 
   fill(255);
   textAlign(CENTER);
   textSize(48);
-  text("You Escaped!", width / 2, height / 2 - 20);
+  textStyle(BOLD);
+  text("YOU ESCAPED!", width / 2, height / 2 - 20);
 
   textSize(16);
-  fill(180);
-  text("All coins collected", width / 2, height / 2 + 20);
+  fill(255);
+  textStyle(BOLD);
+  text("All hearts collected", width / 2, height / 2 + 20);
 }
