@@ -476,14 +476,17 @@ function drawHUD() {
   fill(255);
   textSize(14);
   textAlign(CENTER);
+  textStyle(NORMAL);
   textFont("monospace");
   text("HEARTS: " + heartsCollected + " / " + hearts.length, 105, 20);
+  textStyle(BOLD);
   text("SUPER MARIO MAZE: FIND LOVE", width / 2, 20);
 
   // Show exit hint once all hearts are collected
   if (heartsCollected === hearts.length) {
     fill(189, 255, 122);
     textAlign(LEFT);
+    textStyle(NORMAL);
     text("Exit is open! Find the blue tile.", 50, 40);
   }
 }
@@ -502,12 +505,15 @@ function drawWinScreen() {
 
   fill(255);
   textAlign(CENTER);
-  textSize(48);
+  textSize(64);
   textStyle(BOLD);
+  stroke(14, 85, 156);
+  strokeWeight(6);
   text("YOU ESCAPED!", width / 2, height / 2 - 20);
 
-  textSize(16);
-  fill(255);
+  textSize(20);
+  fill(14, 85, 156);
+  noStroke();
   textStyle(BOLD);
-  text("Mario has found love with all hearts collected", width / 2, height / 2 + 20);
+  text("Mario has found love with all hearts collected!", width / 2, height / 2 + 30);
 }
