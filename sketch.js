@@ -56,7 +56,7 @@ const TILE_COLORS = {
 let player = {
   x: 0,
   y: 0,
-  speed: 10,
+  speed: 6,
 
   currentFrame: 0,
   frameTimer:   0,
