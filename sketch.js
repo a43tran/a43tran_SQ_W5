@@ -479,9 +479,10 @@ function drawHUD() {
 // in front of the maze, character, and HUD.
 // ------------------------------------------------------------
 function drawWinScreen() {
-  background(bgImage);
-  rectMode(CORNER);
-  rect(0, 0, width, height);
+  imageMode(CENTER);
+  filter(BLUR, 3);
+  image(bgImage, width/2, height/2, width, height);
+
 
   fill(255);
   textAlign(CENTER);
