@@ -120,7 +120,7 @@ let gameWon = false;
 
 // Images
 let characterSheet;
-let coinSheet;
+let heartSheet;
 
 // ============================================================
 // preload()
@@ -129,7 +129,7 @@ let coinSheet;
 // ============================================================
 function preload() {
   characterSheet = loadImage("assets/images/walking.png");
-  coinSheet      = loadImage("assets/images/hearts.png");
+  heartSheet      = loadImage("assets/images/hearts.png");
 }
 
 // ============================================================
