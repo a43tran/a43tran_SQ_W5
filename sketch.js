@@ -28,8 +28,8 @@ const SPRITE = {
   offsets: {
     down:  { x: 0, y: 0  },
     up:    { x: 0, y: 0  },
-    right: { x: 0, y: 10 },
-    left:  { x: 0, y: 20 },
+    right: { x: .1, y: 10 },
+    left:  { x: 1.2, y: 20 },
   },
 };
 
@@ -129,7 +129,7 @@ let coinSheet;
 // ============================================================
 function preload() {
   characterSheet = loadImage("assets/images/walking.png");
-  coinSheet      = loadImage("assets/images/coin_gold.png");
+  coinSheet      = loadImage("assets/images/hearts.png");
 }
 
 // ============================================================
