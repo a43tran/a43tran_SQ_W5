@@ -332,7 +332,7 @@ function drawHUD() {
     fill(189, 255, 122);
     textAlign(LEFT);
     textStyle(NORMAL);
-    text("Exit is open! Find the blue tile.", 50, 40);
+    text("Exit is open! Find the yellow tile.", 50, 40);
   }
 }
 
